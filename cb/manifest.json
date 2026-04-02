@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Sidebar Assistant",
+  "version": "1.0",
+  "description": "Ask Gemini directly from a sidebar on GitHub and other sites.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["page-network-bridge.js"],
+      "matches": ["*://gemini.google.com/*", "*://www.doubao.com/*", "*://doubao.com/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://gemini.google.com/*", "*://www.doubao.com/*", "*://doubao.com/*"],
+      "js": ["content-target.js"]
+    },
+    {
+      "matches": ["*://gemini.google.com/*"],
+      "js": ["content-gemini.js"]
+    },
+    {
+      "matches": ["*://www.doubao.com/*", "*://doubao.com/*"],
+      "js": ["content-doubao.js"]
+    }
+  ]
+}
